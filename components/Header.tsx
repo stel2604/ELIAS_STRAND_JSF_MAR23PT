@@ -36,7 +36,7 @@ const searchResults = products.filter((product) =>
     <header className="header">
       <div className="logo">
         <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>Mr.Duh BMW butikk!</h1>
+          <h1>Noroff Online Shop</h1>
           <p>Velkommen til butikken min!</p>
         </Link>
       </div>
@@ -67,7 +67,7 @@ const searchResults = products.filter((product) =>
           <span>{calculatedTotal.toFixed(2)} kr</span>
         </Link>
 
-        <div className="profile">👤 Profil</div>
+        <Link href="/contact">✉️ Kontakt</Link>
       </div>
     </header>
   );
