@@ -1,12 +1,26 @@
+/* Standard: Lys modus (Light Mode) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-main: #f8f9fa;
+  --header-bg: #0f172a;
+  --card-bg: #ffffff;
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+  --accent-blue: #2563eb;
+  --accent-red: #dc2626;
+  --border-color: #e2e8f0;
 }
 
+/* Automatisk: Mørk modus (Dark Mode) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg-main: #0b0f17;       /* Mørk bakgrunn for hele siden */
+    --header-bg: #020617;     /* Ennå mørkere header */
+    --card-bg: #1e293b;       /* Mørkegrå/blå bakgrunn på produktkortene */
+    --text-primary: #f8fafc;  /* Hvit/lys tekst */
+    --text-muted: #94a3b8;    /* Dempet lys tekst */
+    --accent-blue: #3b82f6;   /* Litt lysere blå for bedre synlighet på mørk bakgrunn */
+    --accent-red: #ef4444;    /* Litt lysere rød */
+    --border-color: #334155;  /* Mørk kantlinje rundt kortene */
   }
 }
 
@@ -17,18 +31,18 @@ html {
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
 }
 
 * {
@@ -46,4 +60,642 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+
+.productGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 75px;
+  justify-content: center;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 10;
+  height: 100px;
+  background-color: var(--header-bg);
+  color: #ffffff;
+}
+
+.header input {
+  width: 300px;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+
+
+
+/* Animasjon for handlekurv-pling */
+@keyframes cartPling {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cart {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: transform 0.15s ease-in-out;
+}
+
+.cart-pling {
+  display: inline-block;
+  animation: cartPling 0.3s ease-in-out;
+  color: red;
+}
+
+.headerActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+  position: relative;
+  width: 100%;
+}
+
+.userActions {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-left: auto;
+  margin-right: 40px;
+}
+
+
+.productImageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.productImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.productCard {
+  width: 260px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.productCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Luft mellom knappene og tallet */
+}
+
+
+/* Justert - + legg til handlekurv-knapp */
+.addOnCart {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.addButton {
+  background-color: #e5e7eb;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent-blue);
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+.addButton:hover {
+background-color: #1d4ed8;
+}
+
+.removeButton {
+  background-color: #e5e7eb;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeButton:hover {
+  background-color: #7baefa;
+  color: #f8f8f8;
+}
+
+
+
+
+/* CSS */
+.removeAll{
+  background: #FF4742;
+  border: 1px solid #FF4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 30px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  height: 28px; /* Samme høyde som pluss/minus */
+  padding: 0 0.8rem; /* Fjernet padding i topp/bunn så height styrer den */
+  
+}
+
+.removeAll:hover,
+.button-24:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF4742;
+}
+
+.removeAll:active {
+  opacity: .5;
+}
+
+
+/* Handlekurv Hovedoppsett */
+.cartPage {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.cartPage h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+/* Layout: Varelister + Oppsummering side om side */
+.cartLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+
+
+/* Hver enkelt rad i varelisten */
+.cartList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cartRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+}
+
+.cartRowImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cartRowDetails {
+  flex: 1;
+}
+
+.cartRowDetails h2 {
+  font-size: 1rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.cartRowPrice {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.cartRowQuantity {
+  font-weight: 500;
+}
+
+.cartRowSubtotal {
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: right;
+  min-width: 90px;
+}
+
+/* Oppsummeringsboks til høyre */
+.cartSummary {
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+}
+
+.cartSummary h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.summaryRow.totalRow {
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-top: 1px solid #ff0000;
+  padding-top: 0.75rem;
+  margin-top: 1rem;
+  color: #ffffff;
+}
+
+.checkoutButton {
+  width: 100%;
+  padding: 0.6em 2em;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.checkoutButton:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  /* RETTET HER: Endret fra glowing-button-85 til glowing-checkoutButton */
+  animation: glowing-checkoutButton 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-checkoutButton {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.checkoutButton:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+/* Tom handlekurv */
+.emptyCart {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.continueShoppingButton {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+/* Sett opp antalls-kolonnen vertikalt */
+.cartRowQuantity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Beholder for knapper */
+.cartQuantityControls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Foreldre-containeren som holder alle knappene på linje */
+.cartQuantityControls {
+  display: flex;
+  align-items: center; /* Sørger for at alle knapper flukter på midten */
+  gap: 0.5rem;
+}
+
+/* Styling av pluss/minus-knappene i handlekurven */
+.cartQtyBtn {
+  background-color: #e5e7eb;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Justert Fjern-knapp */
+.cartRemoveBtn {
+  background-color: #dc2626c7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  height: 28px; /* Samme høyde som pluss/minus */
+  padding: 0 0.8rem; /* Fjernet padding i topp/bunn så height styrer den */
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartQtyBtn:hover {
+  background-color: #7baefa;
+  color: #f8f8f8;
+}
+
+.cartRemoveBtn:hover {
+  background-color: #ffa600;
+  color: #111827;
+}
+
+
+.discountedPrice {
+  color: red;
+  font-weight: bold;
+  
+}
+
+/* Rabattmerke oppå bildet */
+.discountBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: var(--accent-red);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.oldPrice {
+  text-decoration: line-through;
+}
+
+
+.searchResults {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  background: rgb(107, 107, 107);
+  z-index: 10;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.searchResults a {
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  padding: 6px 12px;
+}
+
+.toastNotice {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #ffffff;
+  border-color: red;
+  
+  /* Mørk, stilren flytende boks */
+  background-color: #000000;
+  color: #ffffff;
+  padding: 1rem 2rem;
+  border-radius: 9999px; /* Pille-form */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  
+  font-size: 1rem;
+  font-weight: 500;
+  z-index: 1000; /* Sørger for at den ligger over alt annet innhold */
+}
+
+
+.loadingContainer {
+  display: flex;
+  justify-content: center; /* Sentrerer vannrett (horisontalt) */
+  align-items: center;     /* Sentrerer loddrett (vertikalt) */
+  width: 100%;
+  min-height: 50vh;        /* Tar 50% av skjermhøyden slik at den havner midt på */
+}
+
+.loadingText {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.errorContainer {
+  display: flex;
+  justify-content: center; /* Sentrerer vannrett (horisontalt) */
+  align-items: center;     /* Sentrerer loddrett (vertikalt) */
+  width: 100%;
+  min-height: 50vh;        /* Tar 50% av skjermhøyden slik at den havner midt på */
+}
+
+.errorMessage {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Definerer hvordan fadingen foregår */
+@keyframes pulse {
+  0% {
+    opacity: 0.2; /* Nesten usynlig */
+  }
+  50% {
+    opacity: 1;   /* Helt tydelig */
+  }
+  100% {
+    opacity: 0.2; /* Går tilbake til nesten usynlig */
+  }
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 600px) {
+.userActions {
+  margin: 0;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.header {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 12px;
+    padding: 12px;
+}
+
+  .cartLayout {
+    flex-direction: column;
+  }
+
+@media (max-width: 600px) {
+  .cartRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+}
+
+
+.globalToast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: #1e293b;
+  color: white;
+  padding: 14px 28px;
+  border: 2px solid white;
+  border-radius: 30px;
+  border-color: red;
+
+  z-index: 9999;
+  text-align: center;
+  max-width: calc(100vw - 32px);
 }

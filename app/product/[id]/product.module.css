@@ -1,0 +1,158 @@
+:root {
+  --page-bg: #ffffff;
+  --text-primary: #111827;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #0b0f17;
+    --text-primary: #ffffff;
+  }
+}
+
+
+.productTitle {
+  color: var(--text-primary);
+}
+
+.description {
+  color: var(--text-primary);
+}
+
+/* 1. Hovedbeholder som holder alt samlet */
+.productContainer {
+  max-width: 1000px;        /* Sørger for at siden ikke blir for bred på store skjermer */
+  margin: 2rem auto;        /* Sentrerer hele containeren horisontalt */
+  padding: 0 1rem;          /* Gir litt luft på sidene på mobil */
+  
+  display: flex;            /* Bruker Flexbox for layout */
+  flex-direction: column;   /* Mobil først: Legger bilde og info over hverandre */
+  gap: 2rem;                /* Avstand mellom bilde og tekst */
+}
+
+/* 2. Responsivt grep: På dataskjermer (fra 768px bredde) legger vi dem ved siden av hverandre */
+@media (min-width: 768px) {
+  .productContainer {
+    flex-direction: row;    /* Bilde til venstre, tekst til høyre */
+    align-items: flex-start;/* Flukter toppen av bildet med toppen av teksten */
+  }
+
+  .imageWrapper, 
+  .infoWrapper {
+    flex: 1;                /* Gir bilde og tekst presis 50% bredde hver */
+  }
+}
+
+/* 3. Bildebeholderen */
+.imageWrapper {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;         /* Kutter av hjørnene på bildet slik at de følger border-radius */
+  background-color: #f9fafb;/* Gir en lys bakgrunn i tilfelle bildet har gjennomsiktighet */
+}
+
+/* 4. MIKRO-LÆRING: Dette fikser "kjempebildet"! */
+.productImage {
+  width: 100%;              /* Tvinger bildet til å tilpasse seg bredden til beholderen sin */
+  height: auto;             /* Bevarer bildets opprinnelige misforhold/størrelsesforhold */
+  display: block;           /* Fjerner et lite usynlig tomrom under <img>-elementer */
+  object-fit: cover;        /* Sørger for at bildet fyller plassen pent uten å strekkes ut */
+}
+
+/* 5. Typografi og tekst-styling */
+
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2563eb;           /* En pen blåfarge på prisen */
+  margin-bottom: 1.5rem;
+}
+
+
+
+/* Justert - + legg til handlekurv-knapp */
+.addOnCart {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.addButton {
+  background-color: #e5e7eb;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addButton:hover {
+  background-color: #7baefa;
+  color: #f8f8f8;
+}
+
+.removeButton {
+  background-color: #e5e7eb;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeButton:hover {
+  background-color: #7baefa;
+  color: #f8f8f8;
+}
+
+
+
+
+.removeAll {
+  background-color: #dc2626c7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  height: 28px; /* Samme høyde som pluss/minus */
+  padding: 0 0.8rem; /* Fjernet padding i topp/bunn så height styrer den */
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeAll:hover {
+  background-color: #ffa600;
+}
+
+.oldPrice {
+  text-decoration: line-through;
+  color: #6b7280; /* Gråaktig farge */
+  font-size: 0.9rem;
+}
+
+.discountedPrice {
+  color: #dc2626; /* Rød farge for tilbud */
+  font-weight: bold;
+  font-size: 1.25rem;
+}

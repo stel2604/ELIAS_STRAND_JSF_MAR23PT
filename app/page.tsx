@@ -1,69 +1,122 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useState, useContext, useEffect } from "react";
+import ProductCard from "@/components/ProductCard";
+import { ApiProduct } from "@/types/product";
+import { CartContext } from "@/context/CartContext";
+import { SearchContext } from "@/context/SearchContext";
 
 export default function Home() {
+  const cartContext = useContext(CartContext);
+  if (!cartContext) {
+    throw new Error("CartContext mangler");
+  }
+
+  const {
+  cart,
+  handleAddToCart,
+  handleRemoveFromCart,
+  handleClearItemFromCart,
+} = cartContext;
+
+  
+
+
+
+  const searchContext = useContext(SearchContext);
+
+if (!searchContext) {
+  throw new Error("SearchContext mangler");
+}
+
+const { search, setProducts } = searchContext;
+
+  const [sortOrder, setSortOrder] = useState("low");
+  const [apiProducts, setApiProducts] = useState<ApiProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+
+
+  const testApi = async () => {
+    try {
+      const response = await fetch("https://v2.api.noroff.dev/online-shop");
+
+      if (!response.ok) {
+        setError("Kunne ikke hente produkter.");
+        setIsLoading(false);
+        return;
+      }
+
+      const result = await response.json();
+      setApiProducts(result.data);
+      setProducts(result.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setError("En uventet feil oppstod.");
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    void Promise.resolve().then(() => testApi());
+  }, []);
+
+  const filteredProducts = apiProducts.filter((product) => {
+    return product.title.toLowerCase().includes(search.toLowerCase());
+  });
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sortOrder === "low") {
+      return a.price - b.price;
+    } else {
+      return b.price - a.price;
+    }
+  });
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main>
+      <div className="filterButtons">
+        <button onClick={() => setSortOrder("low")}>Lavest pris</button>
+        <button onClick={() => setSortOrder("high")}>Høyest pris</button>
+      </div>
+
+      {isLoading ? (
+        <div className="loadingContainer">
+          <p className="loadingText">Laster produkter...</p>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      ) : error ? (
+        <div className="errorContainer">
+          <p className="errorMessage">{error}</p>
         </div>
-      </main>
-    </div>
+      ) : (
+        <div className="productGrid">
+          {sortedProducts.map((product) => {
+            const cartItem = cart.find(
+              (cartItem) => cartItem.product.id === product.id
+            );
+
+            return (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                title={product.title}
+                price={product.price}
+                discountedPrice={product.discountedPrice}
+                image={product.image.url}
+                rating={product.rating}
+                category={product.tags[0]}
+                product={product}
+                onAddToCart={handleAddToCart}
+                quantity={cartItem?.quantity ?? 0}
+                onRemoveFromCart={handleRemoveFromCart}
+                onClearItemFromCart={handleClearItemFromCart}
+              />
+            );
+          })}
+        </div>
+      )}
+    </main>
   );
 }
