@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CartContext } from "@/context/CartContext";
 import { ApiProduct } from "@/types/product";
 
@@ -8,30 +8,53 @@ type AddToCartButtonProps = {
   product: ApiProduct;
 };
 export default function AddToCartButton({ product }: AddToCartButtonProps) {
-  const [showToast, setShowToast] = useState(false);
+  
     const cartContext = useContext(CartContext);
     if (!cartContext) {
         throw new Error("CartContext mangler");
     }
-    const { handleAddToCart } = cartContext;
+  
+  const { cart, handleAddToCart, handleRemoveFromCart, handleClearItemFromCart,} = cartContext;
+
+  const quantity =
+    cart.find((item) => item.product.id === product.id)?.quantity ?? 0;
 
 return (
   <>
-    <button
-      className="addOnCart"
-      onClick={() => {
-        console.log("KLIKK FUNGERER:", product);
-        handleAddToCart(product);
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
-      }}
-    >
-      Legg i handlekurv
-    </button>
+    {quantity === 0 ? (
+      <button
+        className="addOnCart"
+        onClick={() => handleAddToCart(product)}
+      >
+        Legg i handlekurv
+      </button>
+    ) : (
+      <div className="quantityControls">
+        <button
+          className="removeButton"
+          onClick={() => handleRemoveFromCart(product.id)}
+        >
+          −
+        </button>
 
-    {showToast && (
-      <p>Lagt i handlekurven! ✓</p>
+        <span>{quantity}</span>
+
+        <button
+          className="addButton"
+          onClick={() => handleAddToCart(product)}
+        >
+          +
+        </button>
+      </div>
     )}
+          {quantity > 1 && (
+        <button
+          className="removeAll"
+          onClick={() => handleClearItemFromCart(product.id)}
+        >
+          Fjern fra handlekurv
+        </button>
+      )}
   </>
 );
 

@@ -68,21 +68,18 @@
 
 /* Mørk boks rundt sammendrag */
 .cartSummary {
-  flex: 1;
-  background-color: #1a2332;
-  border-radius: 8px;
   padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  align-self: flex-start;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--card-bg);
 }
 
 .cartSummary h2 {
+  font-size: 1.25rem;
   margin-top: 0;
-  margin-bottom: 0.5rem;
-  color: white;
+  margin-bottom: 1rem;
 }
+
 
 .summaryRow {
   display: flex;

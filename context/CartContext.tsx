@@ -82,10 +82,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCart(updatedCart);
   };
 
-  const handleClearItemFromCart = (productId: string) => {
-    const updatedCart = cart.filter((item) => item.product.id !== productId);
-    setCart(updatedCart);
-  };
+const handleClearItemFromCart = (productId: string) => {
+  const productToRemove = cart.find(
+    (item) => item.product.id === productId
+  );
+
+  if (!productToRemove) return;
+
+  const updatedCart = cart.filter(
+    (item) => item.product.id !== productId
+  );
+
+  setCart(updatedCart);
+
+  setToastMessage(
+    `${productToRemove.product.title} er fjernet fra handlekurven! ✓`
+  );
+};
 
   return (
     <CartContext.Provider

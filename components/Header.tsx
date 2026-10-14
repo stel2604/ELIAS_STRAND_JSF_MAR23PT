@@ -51,9 +51,13 @@ const searchResults = products.filter((product) =>
           {search.trim() !== "" && (
           <div className="searchResults">
             {searchResults.map((product) => (
-              <Link key={product.id} href={`/product/${product.id}`}>
-                {product.title}
-              </Link>
+            <Link
+              key={product.id}
+              href={`/product/${product.id}`}
+              onClick={() => setSearch("")}
+            >
+              {product.title}
+            </Link>
             ))}
           </div>
         )}

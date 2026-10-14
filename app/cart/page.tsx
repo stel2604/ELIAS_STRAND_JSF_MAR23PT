@@ -18,14 +18,9 @@ export default function CartPage() {
 
 
   // Hent funksjonene fra konteksten din
-  const {
-  cart,
-  handleAddToCart,
-  handleRemoveFromCart,
-  handleClearItemFromCart
-} = cartContext;
+  const { cart, handleAddToCart, handleRemoveFromCart, handleClearItemFromCart } = cartContext;
 
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 const totalPrice = cart.reduce(
   (sum, item) => sum + item.product.discountedPrice * item.quantity,
   0
@@ -66,15 +61,19 @@ const totalDiscount = originalTotal - totalPrice;
               return (
                 <div key={cartItem.product.id} className="cartRow">
                   {cartItem.product.image?.url && (
-                    <img
-                      src={cartItem.product.image.url}
-                      alt={cartItem.product.title}
-                    className="cartRowImage"
-                  />
-                )}
+                    <Link href={`/product/${cartItem.product.id}`}>
+                      <img
+                        src={cartItem.product.image.url}
+                        alt={cartItem.product.title}
+                        className="cartRowImage"
+                      />
+                    </Link>
+                  )}
 
               <div className="cartRowDetails">
-                <h2>{cartItem.product.title}</h2>
+                <Link href={`/product/${cartItem.product.id}`}>
+                  <h2>{cartItem.product.title}</h2>
+                </Link>
 
                 {hasDiscount ? (
                   <>
