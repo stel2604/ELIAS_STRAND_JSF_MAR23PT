@@ -11,19 +11,9 @@ export default function Home() {
   if (!cartContext) {
     throw new Error("CartContext mangler");
   }
+const { cart, handleAddToCart, handleRemoveFromCart, handleClearItemFromCart, } = cartContext;
 
-  const {
-  cart,
-  handleAddToCart,
-  handleRemoveFromCart,
-  handleClearItemFromCart,
-} = cartContext;
-
-  
-
-
-
-  const searchContext = useContext(SearchContext);
+const searchContext = useContext(SearchContext);
 
 if (!searchContext) {
   throw new Error("SearchContext mangler");
@@ -31,14 +21,12 @@ if (!searchContext) {
 
 const { search, setProducts } = searchContext;
 
-  const [sortOrder, setSortOrder] = useState("low");
-  const [apiProducts, setApiProducts] = useState<ApiProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
+const [sortOrder, setSortOrder] = useState("low");
+const [apiProducts, setApiProducts] = useState<ApiProduct[]>([]);
+const [isLoading, setIsLoading] = useState(true);
+const [error, setError] = useState("");
 
-
-
-  const testApi = async () => {
+const testApi = async () => {
     try {
       const response = await fetch("https://v2.api.noroff.dev/online-shop");
 
@@ -59,15 +47,15 @@ const { search, setProducts } = searchContext;
     }
   };
 
-  useEffect(() => {
+useEffect(() => {
     void Promise.resolve().then(() => testApi());
   }, []);
 
-  const filteredProducts = apiProducts.filter((product) => {
+const filteredProducts = apiProducts.filter((product) => {
     return product.title.toLowerCase().includes(search.toLowerCase());
   });
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
+const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortOrder === "low") {
       return a.price - b.price;
     } else {

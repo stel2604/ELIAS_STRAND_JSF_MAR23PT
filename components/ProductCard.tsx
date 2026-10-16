@@ -12,7 +12,7 @@ type ProductCardProps = {
     onRemoveFromCart?: (productId: string) => void;
     id: string | number;
     category: string;
-    product: ApiProduct; // Add the product prop of type ApiProduct
+    product: ApiProduct; 
     quantity: number;
     onClearItemFromCart?: (productId: string) => void;
 }
@@ -31,7 +31,7 @@ export default function ProductCard({
     onClearItemFromCart,
     id,
     category,
-    product, // Destructure the product prop
+    product, 
     quantity,
 
 }: ProductCardProps) {

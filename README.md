@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Noroff Online Shop
 
-## Getting Started
+**Course:** FM2AJJF75 – JavaScript Frameworks  
+**Student:** Elias Strand  
+**Project:** Course Assignment – Online Shop
 
-First, run the development server:
+## Project Description
+
+This project is an online shop built with Next.js, React and TypeScript as part of my JavaScript Frameworks course at Noroff.
+
+The website uses the Noroff Online Shop API to display products. Users can search for products, view product details, add products to a shopping cart and complete a simulated checkout.
+
+## Live Website
+
+[View the online shop on Netlify](https://elias-strand-jsf-mar23pt.netlify.app/)
+
+## GitHub Repository
+
+[View the source code](https://github.com/stel2604/ELIAS_STRAND_JSF_MAR23PT)
+
+## Technologies Used
+
+- Next.js 16
+- React 19
+- TypeScript
+- CSS and CSS Modules
+- React Context API
+- Noroff Online Shop API
+- Git and GitHub
+- Netlify
+
+## Features
+
+- Product listing using the Noroff API
+- Product search with clickable suggestions
+- Product sorting by price
+- Individual product detail pages
+- Product ratings, reviews and discount prices
+- Shopping cart with shared state using React Context
+- Add, decrease and remove product quantities
+- Automatic cart total and discount calculations
+- Toast notifications when products are added or removed
+- Checkout page with customer information fields
+- Order confirmation page
+- Contact form
+- Responsive layout for desktop and mobile
+- Loading and error handling for product data
+
+## Installation
+
+To run the project locally, follow these steps.
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/stel2604/ELIAS_STRAND_JSF_MAR23PT.git
+```
+
+### 2. Open the project folder
+
+```bash
+cd ELIAS_STRAND_JSF_MAR23PT
+```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Testing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project has been tested locally and on Netlify.
 
-## Learn More
+The following commands were used:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run lint
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The production build completed successfully. ESLint reported zero errors and four warnings.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Manual testing included product navigation, search, cart quantity controls, discount calculations, checkout and order confirmation.
 
-## Deploy on Vercel
+## API
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Product information is fetched from the Noroff Online Shop API:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+https://v2.api.noroff.dev/online-shop
+
+## Deployment
+
+The project is deployed on Netlify and connected to the GitHub repository.
+
+New commits pushed to the main branch trigger automatic deployments.
+
+## AI Assistance
+
+AI tools were used as learning and development support, including explanations, debugging and code suggestions.
+
+The AI assistance is documented separately in `AI_LOG.md`.
+
+## Author
+
+Elias Strand  
+Noroff – Frontend Development
